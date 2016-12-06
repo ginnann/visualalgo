@@ -1,0 +1,135 @@
+body{
+  width :640px;
+}
+body > div{
+  /*width : 650px;*/
+    /*width : 3->500 4->642*/
+}
+body > form > div{
+  /*width : 650px;*/
+}
+#tejun_nyuryoku{
+  font-size: 18px;
+  font-weight: bold;
+}
+#algo{
+border:0;
+padding:5px;
+font-size:20px;
+font-family:Arial, sans-serif;
+color:#111;
+border:solid 1px #ccc;
+width:500px;
+-webkit-border-radius: 5px;
+-moz-border-radius:5px;
+border-radius: 5px;
+}
+#other div{
+  font-size:15px;
+}
+.forms{
+  /*background-color: orange;*/
+}
+.buttons{
+  /*background-color : skyblue;*/
+}
+
+.form-set > div{
+  /*background-color: yellow;*/
+  display: inline-block;
+  text-align: left;
+
+  /*padding:0;
+  margin :0;*/
+
+}
+.h{
+  /*background: green;*/
+  /*display: inline-block;*/
+  height: 25px;
+  width: 80px;
+  margin: 3px 0 0 10px;
+  padding: 0;
+}
+.result{
+  border: 1px solid #888;
+
+}
+.result *{
+  margin: 0;
+  padding: 0;
+
+
+}
+.initialstate{
+  /*background:CornflowerBlue;*/
+  height: 150px;
+  position: relative;
+
+}
+.initialstate img{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  /*margin: 10px auto  10px 260px;*/
+}
+.tejun{
+  background:CornflowerBlue;
+  font-size: 20px;
+  /*font-weight: bold;*/
+  text-align: center;
+}
+.moves div{
+  margin :0;
+  padding:0;
+  height: 130px;
+}
+
+.moveline{
+}
+
+.moveline div{
+  display: inline-block;
+}
+
+.onemove{
+  /*background: yellow;*/
+  margin :0;
+  padding:0;
+  position: relative;
+
+}
+
+.badge{
+  position: absolute;
+text-align: center;
+top: 0px;
+left: 2px;
+width: 64px;
+height: 35px;
+color: black;
+font-size: 25px;
+}
+
+.onemove img{
+}
+.buttons{
+  margin: 4px 0;
+}
+.btn{
+	width: 80px;
+  height :27px;
+  background-color: #4B7FE8;
+  color: #fff;
+	text-align: center;
+  font-size: 12px;
+	text-decoration: none;
+  cursor: pointer;
+}
+.btn:hover{
+	text-decoration: none;
+  background-color: #306CE3;
+}
