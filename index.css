@@ -1,3 +1,6 @@
+body *{
+  font-family:Arial, sans-serif;
+}
 body{
   width :640px;
 }
@@ -47,8 +50,8 @@ border-radius: 5px;
   /*background: green;*/
   /*display: inline-block;*/
   height: 25px;
-  width: 80px;
-  margin: 3px 0 0 10px;
+  width: 110px;
+  margin: 3px 0 0 5px;
   padding: 0;
 }
 .result{
@@ -78,9 +81,18 @@ border-radius: 5px;
 }
 .tejun{
   background:CornflowerBlue;
-  font-size: 20px;
   /*font-weight: bold;*/
-  text-align: center;
+  height :40px;
+  position: relative;
+}
+.tejunprint{
+  position: absolute;
+  width:638px;
+  top:7px;
+
+    text-align: center;
+      font-size: 22px;
+    padding : auto !important;
 }
 .moves div{
   margin :0;

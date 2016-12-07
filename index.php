@@ -2,7 +2,9 @@
 require_once("parameter.php");
 if($_SERVER['REQUEST_METHOD']==='GET'){
 	$imputalgo = $_GET['imputalgo'];
+	$shurui = $_GET['shurui'];
 }
+if($shurui==="f2l"){$stage="f2l";}
 $fmt="svg";
 $algtype="case";
 
@@ -15,7 +17,6 @@ $algtype="case";
 		$imputalgo_opend=preg_replace($pattern, '\'', $imputalgo_opend );
 		$pattern = '/('.' |'.urlencode('　').'|%20'.')/';
 		$imputalgo_opend=preg_replace($pattern,'', $imputalgo_opend); //delete space
-
 
 		$imputalgo_opend=preg_replace('/\'w/',"w'",$imputalgo_opend);
 		$imputalgo_opend=preg_replace('/2\'|\'2/',"2'",$imputalgo_opend); //wrong arw
@@ -56,6 +57,42 @@ $algtype="case";
 		preg_match_all('/([UDLRFBudlrfbMESxyz])(([\'w2]|%27)*)/', $imputalgo_opend, $split);
 		$split0=$split[0];
 
+		//suffix
+		$suf="xx'";
+	  $c=count($split0);
+		for ($i=1;$i <= $c;$i++){
+			// echo substr($split0[$c-$i],0,1) . "<br>";
+			switch (substr($split0[$c-$i],0,1)) {
+				case 'r':
+				case 'x':
+					$suf .= invert_alg(str_replace("r","x",$split0[$c-$i]));
+					break;
+				case 'l':
+					$suf .= str_replace("l","x",$split0[$c-$i]) ;
+					break;
+				case 'u':
+				case 'y':
+					$suf .= invert_alg(str_replace("u","y",$split0[$c-$i]));
+					break;
+				case 'd':
+					$suf .= str_replace("d","y",$split0[$c-$i]);
+					break;
+				case 'f':
+				case 'z':
+					$suf .= invert_alg(str_replace("f","z",$split0[$c-$i]));
+					break;
+				case 'b':
+					$suf .= str_replace("b","z",$split0[$c-$i]);
+					break;
+				default:
+					# code...
+					break;
+			}
+		}
+		$split0[] = $suf;
+
+		//print_r($split0);
+
 		//set array $tejun
 		    $tejun=array();
 				print_tejun(0);
@@ -65,6 +102,7 @@ $algtype="case";
 <html lang="ja">
 <head>
 	<meta charset="utf-8">
+	<meta name="description" content="回転記号で書かれた手順を画像で表示">
 	<link rel="stylesheet" href="./index.css">
 	<title>VisualAlgo</title>
 </head>
@@ -77,7 +115,7 @@ $algtype="case";
 <form action="" method="GET">
 <div class="forms">
   <div class="form-set">
-    <div class = "h" id="tejun_nyuryoku">手順入力</div>
+    <div class = "h" id="tejun_nyuryoku">回転記号入力</div>
     <div class = "in">
 			<input type="text" value="<?php if($imputalgo!='') echo $imputalgo; ?>" name="imputalgo" id="algo" placeholder="例)xUR'U'LURU'R'w">
     </div>
@@ -85,10 +123,10 @@ $algtype="case";
   <div id="other" style="display: none;" >
     <div class="form-set">
     	<div class = "h">手順の種類</div>
-			<SELECT name = "stage">
-				<OPTION value="" <?php if($stage=='') echo selected; ?>>指示しない</OPTION>
-				<OPTION value="ll" <?php if($stage=='ll') echo selected; ?>>LL(OLL,PLL)</OPTION>
-				<OPTION value="f2l" <?php if($stage=='f2l') echo selected; ?>>F2L</OPTION>
+			<SELECT name = "shurui">
+				<OPTION value="" <?php if($shurui=='') echo selected; ?>>指示しない</OPTION>
+				<OPTION value="ll" <?php if($shurui=='ll') echo selected; ?>>LL(OLL,PLL)</OPTION>
+				<OPTION value="f2l" <?php if($shurui=='f2l') echo selected; ?>>F2L</OPTION>
 			</SELECT>
   	</div>
 		<div class="form-set">
@@ -132,7 +170,7 @@ $algtype="case";
 	<div class="initialstate">
 		<?php
 			$algorithm = $tejun[0];
-			if($stage==="ll"){
+			if($shurui==="ll"){
 				$view="plan";
 				include "img.php";
 				$view="";
@@ -142,14 +180,16 @@ $algtype="case";
 		?>
 	</div>
 	<div class="tejun">
-		<?php echo $imputalgo ?>
+		<div class="tejunprint">
+			<?php echo $imputalgo ?>
+		</div>
 	</div>
 
 	<div class="moves">
 		<?php
 			//display
 
-			for($i=0 ; $i < count($tejun) + 1 ; $i++){
+			for($i=0 ; $i < count($tejun)  ; $i++){
 
 				//div .moveline
 				if($i % 4 == 0){
@@ -167,9 +207,9 @@ $algtype="case";
 					echo '<span class="badge">180</span>';
 				}
 
-				if($i == count($tejun)){
+				if($i == count($tejun)-1){
 					//finallstate
-					$algorithm="";
+					$algorithm=end($split0);
 					$arw="";
 					include"img.php";
 				}else{
@@ -246,10 +286,8 @@ $algtype="case";
 							$s=$s+5;
 						}
 					}
-
 					//cube display
 					include "img.php";
-
 				}
 
 				// /div onemove
@@ -342,7 +380,7 @@ $algtype="case";
 						else	$i--;
 					}
 					// Invert and add the move
-					$inv .= $pre . $c . $ALG_POW[3 - $pow] . ' ';
+					$inv .= $pre . $c . $ALG_POW[3 - $pow];
 					$pow = 1; $pre = '';
 				}
 				else $pow = move_pow(substr($alg, $i, 1));

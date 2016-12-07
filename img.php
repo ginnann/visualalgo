@@ -1,11 +1,13 @@
 <?php
 $error = "";
-$src = "http://cube.crider.co.uk/visualcube.php";
+// $src = "http://cube.crider.co.uk/visualcube.php";
+$src="./visualcube/visualcube.php";
 if($fmt != ''){
     $src .= "?fmt=" .$fmt;
 }else{
         $src .= "?fmt=gif";
 }
+
 if($algorithm==''){
     //処理なし
 }elseif($algtype=='alg'){
@@ -191,7 +193,11 @@ if($sch=='wcs'){
     if($error != ''){
         $src .= "&sch=brywog";
     }
+}else{
+  $src .= "&sch=" . $sch ;
 }
+
+
 if($bg != '' AND $bg != 'white'){
     $src .= "&bg=" .$bg;
 }
@@ -211,6 +217,5 @@ if($dist != '' AND $dist != '5'){
     $src .= "&dist=" .$dist;
 }
 echo "<img src=\"" .$src ."\">";
-// echo "<br><span class='text-danger'>" . $error . "</span>";
-// echo "<br>" . $src;
+// echo "<span class='text-danger'>" . $error . "</span>";
 ?>
